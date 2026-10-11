@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>دروس من السيرة النبوية</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,"Segoe UI",Arial,sans-serif;line-height:1.9;color:#1f3a2c;background:#f4faf6;min-height:100vh;transition:background .5s}
+body.dawn{background:linear-gradient(#cfe9d8,#f6f1c9 60%,#bfe0c8)}
+body.road{background:linear-gradient(#14423a,#3f8f72 60%,#e9d8a6)}
+body.night{background:linear-gradient(#1b2a3a,#35566b 60%,#9cc3c9)}
+body.sand{background:linear-gradient(#f3e3c0,#e2c58f 60%,#b9d9c3)}
+body.mist{background:linear-gradient(#dfe9ee,#b8d3d6 60%,#cfe6d8)}
+body.calm{background:linear-gradient(#e3f2e9,#bfe0c8)}
+.deco{position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:90px;opacity:.35;pointer-events:none;letter-spacing:30px}
+.wrap{max-width:720px;margin:0 auto;padding:24px 16px 80px;position:relative}
+h1{color:#2f7d55;text-align:center;font-size:1.7em;margin:28px 0 6px}
+.sub{text-align:center;color:#5b7568;margin:0 0 24px}
+.btn{display:flex;align-items:center;gap:14px;width:100%;text-align:right;font:inherit;color:inherit;background:#fff;border:1px solid #cfe6d8;border-radius:16px;padding:16px;margin-bottom:12px;cursor:pointer;box-shadow:0 4px 14px rgba(47,125,85,.12)}
+.btn:hover{border-color:#4aa376}
+.n{flex:none;width:40px;height:40px;border-radius:50%;background:#2f7d55;color:#fff;text-align:center;line-height:40px;font-weight:bold}
+.back{font:inherit;border:0;border-radius:20px;padding:8px 18px;background:#fff;color:#245c3f;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:14px}
+.card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.head{background:#2f7d55;color:#fff;padding:18px 22px}
+.head h2{margin:0;font-size:1.15em}
+.body{padding:18px 22px}
+.sec{background:#e3f2e9;border-radius:12px;padding:10px 14px;margin-bottom:12px}
+.sec b{display:block;color:#2f7d55;font-size:.92em}
+.ch{background:#2f7d55;color:#fff;border-radius:12px;padding:10px 14px;margin-bottom:12px}
+.ch b{display:block;font-size:.92em}
+.src{color:#5b7568;font-size:.88em;border-top:1px dashed #cfe6d8;padding-top:10px}
+.more{font:inherit;border:0;border-radius:16px;padding:4px 14px;margin-top:8px;background:#fff;color:#245c3f;cursor:pointer}
+.btn.lock{opacity:.55;cursor:not-allowed;background:#eef3f0}
+.btn.cur{border:2px solid #2f7d55}
+.n.ok{background:#4aa376}
+.prog{text-align:center;color:#2f7d55;font-weight:bold;margin:0 0 16px}
+.q{font-size:1.05em;font-weight:bold;margin:0 0 14px}
+.opt{display:block;width:100%;text-align:right;font:inherit;color:inherit;background:#fff;border:2px solid #cfe6d8;border-radius:12px;padding:12px 14px;margin-bottom:10px;cursor:pointer}
+.opt:hover{border-color:#4aa376}
+.opt.good{background:#d6f0df;border-color:#2f7d55}
+.opt.bad{background:#fbe3e3;border-color:#d46a6a;cursor:default}
+.fb{background:#fff6e0;border-radius:10px;padding:8px 12px;margin:0 0 10px;font-size:.92em}
+.win{background:#d6f0df;border-radius:10px;padding:8px 12px;margin-bottom:12px;font-weight:bold;color:#245c3f}
+.next{font:inherit;border:0;border-radius:20px;padding:10px 22px;background:#2f7d55;color:#fff;cursor:pointer;margin-top:6px}
+.reset{font:inherit;border:0;background:none;color:#5b7568;text-decoration:underline;cursor:pointer;display:block;margin:18px auto 0}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="home">
+    <h1>🌿 دروس من السيرة النبوية</h1>
+    <p class="sub">اختبر نفسك: اجتز كل سؤال ليظهر لك الذي بعده</p>
+    <p class="prog" id="prog"></p>
+    <div style="text-align:center"><button class="next" id="start">ابدأ الاختبار</button></div>
+    <button class="reset" id="reset">إعادة الاختبار من البداية</button>
+  </div>
+  <div id="view" class="hide">
+    <button class="back" id="back">→ حفظ والخروج</button>
+    <div class="card">
+      <div class="head"><h2 id="t"></h2></div>
+      <div class="body" id="b"></div>
+    </div>
+  </div>
+</div>
+<div class="deco" id="deco"></div>
+
+<script>
+/* ===== المحتوى: لإضافة موقف انسخ عنصرًا وغيّر نصوصه ===== */
+var DATA = [
+ {
+  bg:"dawn", icon:"⛰️",
+  title:"مواجهة الشائعات والتقليل من شأنك في العمل أو المجتمع",
+  psy:"الشائعات وكلام المحبطين قد يجعلك تشعر بالضعف أو يدفعك للتراجع.",
+  story:"في 'عمرة القضاء' (سنة 7 هـ)، أشاعت قريش أن المسلمين في عسرة وجهد ووهن. فماذا فعل النبي ﷺ؟ أمر أصحابه بالاضطباع والهرولة في الطواف ليظهروا قوتهم وعزتهم أمام أعدائهم، فتبددت الشائعات فوراً.",
+  src:"السيرة النبوية لابن هشام - الجزء الرابع (عمرة القضاء)",
+  tasks:["تحدي الـ 24 ساعة: لا ترد على من يحبطك بالكلام. ركز على إظهار قوتك من خلال 'إنتاجيتك وعملك' ليكون نجاحك هو الرد الحاسم.","أنجز اليوم عملًا واحدًا واضحًا يراه الجميع، فالنتيجة تتكلم عنك أبلغ من أي دفاع."]
+ },
+ {
+  bg:"road", icon:"🌴",
+  title:"التعامل مع الفقد، والاضطرار لترك بيتك أو مالك مرغماً",
+  psy:"الشعور بالاقتلاع من البيئة الدافئة أو خسارة الممتلكات يسبب صدمة نفسية قاسية.",
+  story:"الطبقة الأولى من المهاجرين (الذين أُخرجوا من ديارهم وأموالهم مرغمين). رجال ونساء تركوا كل ما يملكون في مكة وهاجروا إلى الحبشة والمدينة صفر اليدين، لكنهم بنوا حياتهم من جديد بالصبر واليقين.",
+  src:"الطبقات الكبرى لابن سعد - المجلد الثالث (طبقات البدريين من المهاجرين)",
+  tasks:["تحدي الـ 24 ساعة: اكتب قائمة بالأشياء التي لا يمكن لأحد أن يسلبها منك (مهارتك، إيمانك، عزيمتك). الخسارة المادية تعوّض ما دامت روحك قوية.","اختر خطوة صغيرة واحدة تبني بها مكانك الجديد اليوم: ترتيب زاوية، أو التعرف على شخص جديد."]
+ },
+ {
+  bg:"night", icon:"🌙",
+  title:"الحزن والضيق وأنت تشعر أنك وحدك",
+  psy:"الحزن العميق يجعل الطريق يبدو مغلقًا ويضخّم الإحساس بالوحدة.",
+  story:"في الغار أثناء الهجرة، اقترب المشركون حتى خاف أبو بكر رضي الله عنه، فطمأنه النبي ﷺ بأن الله معهما. وجاء الخبر في القرآن: ﴿لا تحزن إن الله معنا﴾ (التوبة: 40).",
+  src:"القرآن الكريم - سورة التوبة، الآية 40، وكتب السيرة (قصة الهجرة)",
+  tasks:["اكتب ثلاثة أشياء ما زالت معك الآن، مهما كانت صغيرة، ثم كلّم شخصًا قريبًا منك ولو بدقيقتين.","اخرج لتمشي عشر دقائق في الهواء الطلق، وبعدها اكتب ما تحتاجه فعلًا من الآخرين."]
+ },
+ {
+  bg:"mist", icon:"🌫️",
+  title:"الخوف والقلق من المجهول",
+  psy:"القلق يجعلنا نتوقع الأسوأ ونفقد الثقة بقدرتنا على الاحتمال.",
+  story:"بعد نزول الوحي أول مرة رجع النبي ﷺ يرتجف إلى خديجة رضي الله عنها، فطمأنته بأخلاقه: إنك لتصل الرحم وتحمل الكلّ وتكسب المعدوم وتُقري الضيف وتعين على نوائب الحق. فكانت له سكينة ودعمًا.",
+  src:"صحيح البخاري - كتاب بدء الوحي (حديث بدء الوحي)",
+  tasks:["اكتب مخاوفك في ورقة، وبجانب كل خوف اكتب أول خطوة صغيرة يمكنك فعلها فيه.","اذكر لنفسك ثلاثة مواقف مرّت بك وكنت تخاف منها ثم تجاوزتها. الاحتمال عندك أكبر مما تظن."]
+ },
+ {
+  bg:"sand", icon:"🏜️",
+  title:"الرفض والخذلان من الناس",
+  psy:"الرفض يؤلم لأنه يمسّ قيمتك أمام الآخرين، وقد يدفعك للانسحاب أو الغضب.",
+  story:"في رحلة الطائف ردّه أهلها ورموه بالحجارة. ولما عرض عليه ملَك الجبال أن يطبق عليهم الأخشبين قال ﷺ: بل أرجو أن يخرج الله من أصلابهم من يعبد الله وحده لا يشرك به شيئًا.",
+  src:"صحيح البخاري ومسلم (حديث عائشة في الطائف)، وسيرة ابن هشام (الطائف)",
+  tasks:["لا تردّ على الإساءة اليوم، وقدّم لشخص واحد خيرًا بلا انتظار مقابل.","اكتب ما تعلمته من هذا الرفض، وما الذي يبقى بيدك رغم ما حدث."]
+ },
+ {
+  bg:"mist", icon:"🌱",
+  title:"الإحباط بعد فشل أو هزيمة",
+  psy:"بعد الخسارة قد نلوم أنفسنا ونحكم على أنفسنا بالعجز.",
+  story:"بعد أُحد أصاب المسلمين الألم والحزن، فنزل قوله تعالى: ﴿ولا تهنوا ولا تحزنوا وأنتم الأعلون إن كنتم مؤمنين﴾ (آل عمران: 139). وخرج النبي ﷺ بأصحابه في اليوم التالي إلى حمراء الأسد ليثبتوا ولا يظهروا الضعف.",
+  src:"القرآن الكريم - سورة آل عمران، الآية 139، وسيرة ابن هشام (غزوة أُحد وحمراء الأسد)",
+  tasks:["اكتب ما حدث بصيغة الوقائع بدون جلد للذات، ثم أضف تحته درسًا واحدًا وخطوة واحدة للتصحيح.","قم اليوم بعمل صغير ناجح ولو في أبسط الأمور، لتعيد لنفسك إحساس الإنجاز."]
+ },
+ {
+  bg:"calm", icon:"🕊️",
+  title:"الغضب والرغبة في الانتقام",
+  psy:"الغضب يشتعل عندما نشعر بالظلم، وقد يدفعنا لقرار نندم عليه لاحقًا.",
+  story:"في فتح مكة وقف النبي ﷺ أمام من آذوه سنوات طويلة، وذكرت كتب السيرة أنه عفا عنهم وقال: اذهبوا فأنتم الطلقاء. وكان قادرًا على الانتقام فاختار العفو.",
+  src:"سيرة ابن هشام (فتح مكة)، وراجع صيغة الأثر في نسختك",
+  tasks:["أجّل أي ردّ على من أغضبك 24 ساعة، واكتب ما تريد قوله ثم لا ترسله.","خذ نفسًا عميقًا عشر مرات، ثم اسأل نفسك: ما الذي أريده فعلًا من هذا الموقف؟"]
+ },
+ {
+  bg:"night", icon:"🤲",
+  title:"الذنب والندم على خطأ ارتكبته",
+  psy:"الندم قد يتحول إلى جلد مستمر للنفس إن لم يجد طريقًا للإصلاح والعودة.",
+  story:"كعب بن مالك رضي الله عنه تخلّف عن غزوة تبوك بلا عذر، فهجره الناس نحو خمسين يومًا وضاقت عليه الأرض. ثم نزلت توبته من الله، وكان الصدق مع النبي ﷺ سبب نجاته.",
+  src:"صحيح البخاري ومسلم (حديث كعب بن مالك)، والقرآن: سورة التوبة 118",
+  tasks:["اكتب الخطأ بصراحة، وحدّد خطوة إصلاح واحدة تقوم بها اليوم، كاعتذار أو تعويض.","ميّز بين 'أنا أخطأت' و'أنا سيّئ'. الأولى تفتح باب الإصلاح، والثانية تغلقه."]
+ }
+];
+/* ======================================================= */
+
+/* ===== بنك الأسئلة =====
+ f: رقم الشعور في DATA | q: السؤال | a: الإجابة الصحيحة | w: الخيارات الخاطئة | e: توضيح بعد الإجابة
+ أضف الأسئلة الجديدة في آخر القائمة فقط حتى لا يختل حفظ التقدم. */
+var POOL = [
+ {f:0,q:"تحدّث الناس عنك بسوء ليحبطوك. ما أنسب ردّ؟",a:"أُظهر نجاحي بعملي",w:["أردّ عليهم بالمثل","أتوقف عن السعي"],e:"العمل المتقن يُبطل الشائعة أبلغ من الجدال."},
+ {f:0,q:"ماذا فعل النبي ﷺ في عمرة القضاء ليبطل شائعة ضعف المسلمين؟",a:"أمر أصحابه بالاضطباع والهرولة في الطواف",w:["أرسل من ينفي الشائعة بالكلام","ألغى العمرة"],e:"أظهر القوة بالفعل لا بالكلام."},
+ {f:0,q:"زميل يقلل من شأنك أمام الجميع. ما التصرف الحكيم؟",a:"أتجاهل التقليل وأواصل عملي بإتقان",w:["أقلل من شأنه أمامهم","أترك مكان العمل"],e:"الردّ بالإنجاز يحفظ طاقتك وكرامتك."},
+ {f:0,q:"ما درس عمرة القضاء في مواجهة الشائعات؟",a:"الردّ بالفعل الظاهر أقوى من الردّ بالكلام",w:["الصمت التام دائمًا","تجاهل الناس تمامًا"],e:"الفعل الواضح يُسقط الشائعة فورًا."},
+ {f:1,q:"فقدتَ بيتك أو مالك. ما أنفع نظرة؟",a:"أعدّ ما لا يُسلب مني: مهارتي وإيماني وعزيمتي",w:["أعتبر أن حياتي انتهت","أنتظر عودة ما ضاع قبل أن أتحرك"],e:"الخسارة المادية تعوَّض ما دامت الروح قوية."},
+ {f:1,q:"كيف بدأ المهاجرون حياتهم بعد أن تركوا أموالهم في مكة؟",a:"بدؤوا من جديد بالصبر واليقين",w:["عادوا لاسترداد أموالهم بالقوة فورًا","انتظروا العون دون عمل"],e:"بنوا حياتهم من الصفر بالصبر واليقين."},
+ {f:1,q:"بعد خسارة كبيرة، ما أول خطوة عملية؟",a:"خطوة صغيرة واضحة أبني بها مكاني الجديد",w:["قرار كبير متسرع","أعزل نفسي عن الناس"],e:"الخطوات الصغيرة تعيد الإحساس بالسيطرة."},
+ {f:1,q:"إلى أين هاجر الصحابة بعد أن تركوا أموالهم في مكة؟",a:"إلى الحبشة والمدينة",w:["إلى الشام فقط","إلى اليمن فقط"],e:"هاجروا إلى الحبشة ثم إلى المدينة."},
+ {f:2,q:"ماذا قال النبي ﷺ لأبي بكر حين خاف في الغار؟",a:"طمأنه بأن الله معهما",w:["أمره بالخروج من الغار","قال له إن المشركين سيذهبون"],e:"﴿لا تحزن إن الله معنا﴾."},
+ {f:2,q:"في أي سورة جاءت عبارة ﴿لا تحزن إن الله معنا﴾؟",a:"سورة التوبة",w:["سورة البقرة","سورة يس"],e:"في سورة التوبة، الآية 40."},
+ {f:2,q:"حين يشتد حزنك وتشعر بالوحدة، ما أنسب تصرف؟",a:"أتذكر أن الله معي وأتواصل مع قريب",w:["أعزل نفسي وأكتم الحزن","أنشغل بتوقع الأسوأ"],e:"العزلة تزيد الثقل، والتواصل يخففه."},
+ {f:2,q:"ما أنفع ما يُعين على الحزن؟",a:"عدّ ما بقي معي من خير والحديث مع من أثق به",w:["كتمان مشاعري","لوم نفسي"],e:"النظر إلى ما بقي يخفف وطأة ما ذهب."},
+ {f:3,q:"إلى من رجع النبي ﷺ بعد نزول الوحي أول مرة وهو يرتجف؟",a:"خديجة رضي الله عنها",w:["أبو بكر رضي الله عنه","عمّه أبو طالب"],e:"طمأنته خديجة بحسن أخلاقه."},
+ {f:3,q:"بمَ طمأنت خديجة رضي الله عنها النبي ﷺ؟",a:"بحسن أخلاقه: صلة الرحم وإعانة المحتاج",w:["بعدد أنصاره","بمال تملكه"],e:"ذكّرته بما هو عليه من خُلق، فسكن."},
+ {f:3,q:"أنت قلق من أمر جديد مجهول. ما أنسب تصرف؟",a:"أحدد أول خطوة صغيرة وأتحدث لمن أثق به",w:["أتجنب الأمر نهائيًا","أتخيل الأسوأ"],e:"التجنب يغذّي الخوف، والخطوة الصغيرة تكسره."},
+ {f:3,q:"ما أثر الدعم الصادق في وقت الخوف؟",a:"يمنح السكينة ويذكّرنا بقدرتنا",w:["يزيد القلق","لا أثر له"],e:"كلمة صادقة قد تعيد الطمأنينة."},
+ {f:4,q:"ماذا قال النبي ﷺ لملَك الجبال حين عرض إهلاك أهل الطائف؟",a:"رجا أن يخرج الله من أصلابهم من يعبده وحده",w:["أذن له بإهلاكهم","طلب منه الصمت فقط"],e:"رجا لهم الخير رغم الإيذاء."},
+ {f:4,q:"كيف ردّ النبي ﷺ على إيذاء أهل الطائف؟",a:"بالصبر والرجاء في هدايتهم",w:["بالانتقام","بترك الدعوة نهائيًا"],e:"صبر ورجا الخير فيهم."},
+ {f:4,q:"رفضك من كنت تأمل دعمهم. ما أنسب ردّ؟",a:"أصبر وأرجو الخير وأتابع طريقي",w:["أنتقم منهم","لا أثق بأحد أبدًا"],e:"الانتقام والتعميم يعطّلان مسيرتك."},
+ {f:4,q:"ما الذي يقوّي الإنسان بعد الرفض؟",a:"التركيز على ما بقي بيده والتعلّم من التجربة",w:["الانتقام","الانسحاب من الناس"],e:"ما بقي بيدك أكبر من كلمة رفض."},
+ {f:5,q:"أي آية نزلت لتثبّت المسلمين بعد أُحد؟",a:"﴿ولا تهنوا ولا تحزنوا﴾",w:["﴿قل هو الله أحد﴾","﴿ألم نشرح لك صدرك﴾"],e:"في سورة آل عمران، الآية 139."},
+ {f:5,q:"إلى أين خرج النبي ﷺ بأصحابه في اليوم التالي لأُحد؟",a:"حمراء الأسد",w:["بدر","تبوك"],e:"خرجوا إلى حمراء الأسد ليثبتوا."},
+ {f:5,q:"فشلت في مشروع مهم. ما أنسب تصرف؟",a:"أستخرج الدرس وأعود بخطوة عملية",w:["أجلد نفسي وأترك كل شيء","ألوم الآخرين"],e:"جلد الذات واللوم يعطّلان التعلم."},
+ {f:5,q:"لماذا خرج النبي ﷺ إلى حمراء الأسد رغم الجراح؟",a:"ليثبتوا ولا يظهروا الضعف",w:["ليستريحوا","لجمع الغنائم"],e:"الثبات بعد الهزيمة جزء من الانتصار."},
+ {f:6,q:"ماذا قال النبي ﷺ لأهل مكة يوم الفتح بحسب كتب السيرة؟",a:"اذهبوا فأنتم الطلقاء",w:["لا عفو عنكم","غادروا مكة"],e:"عفا وهو قادر. (راجع صيغة الأثر في نسختك)"},
+ {f:6,q:"أنت غاضب وتقدر على الانتقام. ما أنسب تصرف؟",a:"أؤجل القرار حتى يهدأ غضبي أو أعفو",w:["أنتقم فورًا","أخزّن الحقد في داخلي"],e:"القرار وقت الغضب يُندم عليه."},
+ {f:6,q:"ما أول ما يُنصح به لحظة الغضب؟",a:"تأجيل الردّ وتهدئة النفس",w:["الردّ السريع","الصراخ"],e:"التأجيل يمنح العقل فرصة."},
+ {f:6,q:"ما معنى أن تعفو وأنت قادر؟",a:"قوة وسموّ لا ضعف",w:["ضعف وتراجع","تنازل دائم عن الحق"],e:"العفو عن قدرة من أعلى مراتب القوة."},
+ {f:7,q:"عن أي غزوة تخلّف كعب بن مالك رضي الله عنه؟",a:"غزوة تبوك",w:["غزوة بدر","غزوة أُحد"],e:"تخلّف عن تبوك ثم تاب الله عليه."},
+ {f:7,q:"ما الذي كان سبب نجاة كعب رضي الله عنه؟",a:"صدقه مع النبي ﷺ",w:["اعتذاره بعذر مختلق","هروبه من المدينة"],e:"الصدق كان سبب نجاته."},
+ {f:7,q:"ارتكبت خطأً وندمت. ما أنسب تصرف؟",a:"أعترف بصدق وأصلح ما أمكن وأعود",w:["أخفيه وأتجاهله","أحكم على نفسي بأنني سيّئ"],e:"الاعتراف والإصلاح يفتحان الباب."},
+ {f:7,q:"ما الفرق بين «أنا أخطأت» و«أنا سيّئ»؟",a:"الأولى تفتح باب الإصلاح والثانية تغلقه",w:["لا فرق بينهما","الثانية أصدق"],e:"الخطأ فعل، وليس هوية."}
+];
+
+var $ = function(id){ return document.getElementById(id); };
+var home = $("home"), view = $("view"), N = POOL.length, done = [], cur = null;
+try { done = JSON.parse(localStorage.getItem("sira_done") || "[]"); cur = localStorage.getItem("sira_cur"); cur = cur === null ? null : +cur; } catch(e){}
+function save(){ try { localStorage.setItem("sira_done", JSON.stringify(done)); localStorage.setItem("sira_cur", cur === null ? "" : cur); } catch(e){} }
+function el(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
+function sec(cls, title, text){ var d = el("div", cls); d.appendChild(el("b", "", title)); d.appendChild(document.createTextNode(text)); return d; }
+function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function remaining(){ var r = []; for (var i = 0; i < N; i++) if (done.indexOf(i) < 0) r.push(i); return r; }
+function pick(){
+  var r = remaining(); if (!r.length) return null;
+  if (cur !== null && done.indexOf(cur) < 0 && cur < N) return cur;
+  cur = r[Math.floor(Math.random() * r.length)]; save(); return cur;
+}
+
+function renderHome(){
+  var fin = !remaining().length;
+  $("prog").textContent = fin ? "🎉 أنهيت جميع الأسئلة!" : (done.length ? "اجتزت " + done.length + " من " + N : "عدد الأسئلة: " + N);
+  $("start").className = fin ? "next hide" : "next";
+  $("start").textContent = done.length ? "تابع الاختبار" : "ابدأ الاختبار";
+  $("reset").className = done.length ? "reset" : "reset hide";
+  view.className = "hide"; home.className = ""; document.body.className = ""; $("deco").textContent = "";
+}
+
+function lesson(body, d, open){
+  var box = el("div", open ? "" : "hide"), ti = 0, ch = el("div", "ch"), ct = el("span", "", d.tasks[0]);
+  box.appendChild(sec("sec", "🌿 الموقف", d.title));
+  box.appendChild(sec("sec", "🧠 التحليل النفسي", d.psy));
+  box.appendChild(sec("sec", "📜 الموقف التاريخي", d.story));
+  ch.appendChild(el("b", "", "🎯 التحدي العملي")); ch.appendChild(ct);
+  if (d.tasks.length > 1){
+    var mb = el("button", "more", "🔄 تحدٍّ آخر");
+    mb.onclick = function(){ ti = (ti + 1) % d.tasks.length; ct.textContent = d.tasks[ti]; };
+    ch.appendChild(el("br")); ch.appendChild(mb);
+  }
+  box.appendChild(ch); box.appendChild(el("div", "src", "📖 المصدر: " + d.src));
+  if (!open){
+    var tg = el("button", "more", "📜 اعرض الدرس");
+    tg.onclick = function(){ box.className = ""; tg.className = "hide"; };
+    body.appendChild(tg);
+  }
+  body.appendChild(box);
+}
+
+function renderQuiz(){
+  var i = pick();
+  if (i === null){ renderHome(); return; }
+  var Q = POOL[i], body = $("b"); body.innerHTML = "";
+  $("t").textContent = "السؤال " + (done.length + 1) + " من " + N;
+  body.appendChild(el("p", "q", Q.q));
+  var fb = el("div", "fb hide"); body.appendChild(fb);
+  var opts = shuffle([[Q.a, 1]].concat(Q.w.map(function(x){ return [x, 0]; })));
+  opts.forEach(function(o){
+    var bt = el("button", "opt", o[0]);
+    bt.onclick = function(){
+      if (o[1]){
+        var seen = done.some(function(k){ return POOL[k].f === Q.f; });
+        done.push(i); cur = null; save();
+        var d = DATA[Q.f];
+        body.innerHTML = "";
+        body.appendChild(el("div", "win", "✅ إجابة صحيحة! " + Q.e));
+        lesson(body, d, !seen);
+        var more = remaining().length;
+        var nx = el("button", "next", more ? "السؤال التالي ←" : "إنهاء الاختبار 🎉");
+        nx.onclick = function(){ if (more) renderQuiz(); else renderHome(); };
+        body.appendChild(nx);
+        document.body.className = d.bg || "calm"; $("deco").textContent = d.icon || "";
+        window.scrollTo(0, 0);
+      } else {
+        bt.className = "opt bad"; bt.disabled = true;
+        fb.textContent = "💡 ليس الأنسب. فكّر مرة أخرى."; fb.className = "fb";
+      }
+    };
+    body.appendChild(bt);
+  });
+  home.className = "hide"; view.className = ""; document.body.className = "calm"; $("deco").textContent = "";
+  window.scrollTo(0, 0);
+}
+
+$("start").onclick = renderQuiz;
+$("back").onclick = renderHome;
+$("reset").onclick = function(){ if (confirm("هل تريد إعادة الاختبار من البداية؟")){ done = []; cur = null; save(); renderHome(); } };
+renderHome();
+</script>
+</body>
+</html>
