@@ -45,6 +45,13 @@ h1{color:#2f7d55;text-align:center;font-size:1.7em;margin:28px 0 6px}
 .next{font:inherit;border:0;border-radius:20px;padding:10px 22px;background:#2f7d55;color:#fff;cursor:pointer;margin-top:6px}
 .reset{font:inherit;border:0;background:none;color:#5b7568;text-decoration:underline;cursor:pointer;display:block;margin:18px auto 0}
 .hide{display:none}
+
+/* إخفاء علامة Netlify المضافة تلقائياً */
+a[href*="netlify.com"], #netlify-badge, .netlify-badge {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
 </style>
 </head>
 <body>
@@ -67,7 +74,6 @@ h1{color:#2f7d55;text-align:center;font-size:1.7em;margin:28px 0 6px}
 <div class="deco" id="deco"></div>
 
 <script>
-/* ===== المحتوى: لإضافة موقف انسخ عنصرًا وغيّر نصوصه ===== */
 var DATA = [
  {
   bg:"dawn", icon:"⛰️",
@@ -134,11 +140,7 @@ var DATA = [
   tasks:["اكتب الخطأ بصراحة، وحدّد خطوة إصلاح واحدة تقوم بها اليوم، كاعتذار أو تعويض.","ميّز بين 'أنا أخطأت' و'أنا سيّئ'. الأولى تفتح باب الإصلاح، والثانية تغلقه."]
  }
 ];
-/* ======================================================= */
 
-/* ===== بنك الأسئلة =====
- f: رقم الشعور في DATA | q: السؤال | a: الإجابة الصحيحة | w: الخيارات الخاطئة | e: توضيح بعد الإجابة
- أضف الأسئلة الجديدة في آخر القائمة فقط حتى لا يختل حفظ التقدم. */
 var POOL = [
  {f:0,q:"تحدّث الناس عنك بسوء ليحبطوك. ما أنسب ردّ؟",a:"أُظهر نجاحي بعملي",w:["أردّ عليهم بالمثل","أتوقف عن السعي"],e:"العمل المتقن يُبطل الشائعة أبلغ من الجدال."},
  {f:0,q:"ماذا فعل النبي ﷺ في عمرة القضاء ليبطل شائعة ضعف المسلمين؟",a:"أمر أصحابه بالاضطباع والهرولة في الطواف",w:["أرسل من ينفي الشائعة بالكلام","ألغى العمرة"],e:"أظهر القوة بالفعل لا بالكلام."},
